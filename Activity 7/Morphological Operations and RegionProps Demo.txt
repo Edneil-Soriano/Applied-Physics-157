@@ -1,0 +1,47 @@
+%Morphological Operations and RegionProps Demo
+%Maricor Soriano 2023
+
+%% Open an image and convert to grayscale
+I = imread("malaria(1).jpeg");
+Igray = rgb2gray(I);
+figure(1); subplot(1,2,1); imshow(I);
+subplot(1,2,2); imshow(Igray);
+%% Binarize the image by choosing thresholds on the histogram
+figure (2); imhist (Igray);
+BW= and(Igray < 164, Igray>100); %you may change these tresholds
+figure (3); imshow(BW);
+%% Get rid of the small "dusts"
+BW2 = bwmorph(BW,"majority");
+figure(4); imshow(BW2);
+SE = strel("disk",4);
+figure(5);
+BW3 = imopen(BW,SE);imshow(BW3); 
+figure(6);
+BW4 = imclose(BW,SE); imshow(BW4);
+
+%% Demo on regionprops
+BWL = bwlabel(BW3);
+figure(7); imagesc(BWL); colorbar
+features = regionprops(BWL);
+
+
+%% Put label number on Centroid of Blobs
+Centroid = cat(1,features.Centroid);
+figure(7); hold on;
+plot(Centroid(:,1),Centroid(:,2),'r+');
+
+%% Put label numbers on Centroid of blobs
+figure (8); imagesc(BWL); hold on;
+for i = 1:size(Centroid,2)
+    text(Centroid(i,1), Centroid(i,2), num2str(i));
+end
+
+%% Put bounding boxes around each blob
+figure(9); imagesc(BWL); hold on;
+bb = cat(1,features.BoundingBox);
+for i = 1:size(features,1)
+    rectangle('Position',bb(i,:),'EdgeColor','r');
+end
+
+
+    
