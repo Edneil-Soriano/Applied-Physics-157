@@ -9,4 +9,5 @@ Activity 5 - Image Segmentation (I of III) <br>
 Activity 6 - Morphological Operations (II of III) <br>
 Activity 7 - Feature Extraction from Labeled Blobs (III of III) <br>
 Activity 8 - Perceptron and Logistic Regression <br>
-Activity 9 - Neural Networks
+Activity 9 - Neural Networks <br>
+Activity 10 - Introduction to Networks
